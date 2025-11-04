@@ -16,7 +16,7 @@
 name='Microsoft.Windows.Common-Controls' version='6.0.0.0' \
 processorArchitecture='*' publicKeyToken='6595b64144ccf1df' language='*'\"")
 
-#define OPENVR_APPLICATION_KEY "pushrax.SpaceCalibrator"
+#define OPENVR_APPLICATION_KEY "nyautomator.SpaceCalibrator"
 
 extern "C" __declspec(dllexport) DWORD NvOptimusEnablement = 0x00000001;
 extern "C" __declspec(dllexport) DWORD AmdPowerXpressRequestHighPerformance = 0x00000001;

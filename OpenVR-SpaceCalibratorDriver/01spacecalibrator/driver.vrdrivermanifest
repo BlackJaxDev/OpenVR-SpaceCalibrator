@@ -1,6 +1,6 @@
 {
 	"alwaysActivate": true,
-	"name" : "01spacecalibrator",
+	"name" : "nyautomator_spacecalibrator",
 	"directory" : "",
 	"resourceOnly" : false
 }

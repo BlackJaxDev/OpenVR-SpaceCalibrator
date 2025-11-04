@@ -9,10 +9,10 @@
 	!define OVERLAY_BASEDIR "..\client_overlay\bin\win64"
 	!define DRIVER_RESDIR "..\OpenVR-SpaceCalibratorDriver\01spacecalibrator"
 
-	Name "OpenVR-SpaceCalibrator"
-	OutFile "OpenVR-SpaceCalibrator.exe"
-	InstallDir "$PROGRAMFILES64\OpenVR-SpaceCalibrator"
-	InstallDirRegKey HKLM "Software\OpenVR-SpaceCalibrator\Main" ""
+    Name "Nyautomator Space Calibrator"
+    OutFile "NyautomatorSpaceCalibratorInstaller.exe"
+    InstallDir "$PROGRAMFILES64\NyautomatorSpaceCalibrator"
+    InstallDirRegKey HKLM "Software\NyautomatorSpaceCalibrator\Main" ""
 	RequestExecutionLevel admin
 	ShowInstDetails show
 	
@@ -56,7 +56,7 @@ FunctionEnd
 Function .onInit
 	StrCpy $upgradeInstallation "false"
  
-	ReadRegStr $R0 HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\OpenVRSpaceCalibrator" "UninstallString"
+	ReadRegStr $R0 HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\NyautomatorSpaceCalibrator" "UninstallString"
 	StrCmp $R0 "" done
 	
 	
@@ -69,7 +69,7 @@ Function .onInit
  
 	
 	MessageBox MB_OKCANCEL|MB_ICONEXCLAMATION \
-		"OpenVR-SpaceCalibrator is already installed. $\n$\nClick `OK` to upgrade the \
+	"Nyautomator Space Calibrator is already installed. $\n$\nClick `OK` to upgrade the \
 		existing installation or `Cancel` to cancel this upgrade." \
 		IDOK upgrade
 	Abort
@@ -97,7 +97,7 @@ Section "Install" SecInstall
 	SetOutPath "$INSTDIR"
 
 	File "..\LICENSE"
-	File "..\x64\Release\OpenVR-SpaceCalibrator.exe"
+	File "..\x64\Release\NyautomatorSpaceCalibrator.exe"
 	File "..\lib\openvr\lib\win64\openvr_api.dll"
 	File "..\OpenVR-SpaceCalibrator\manifest.vrmanifest"
 	File "..\OpenVR-SpaceCalibrator\icon.png"
@@ -105,7 +105,7 @@ Section "Install" SecInstall
 	ExecWait '"$INSTDIR\vcredist_x64.exe" /install /quiet'
 	
 	Var /GLOBAL vrRuntimePath
-	nsExec::ExecToStack '"$INSTDIR\OpenVR-SpaceCalibrator.exe" -openvrpath'
+	nsExec::ExecToStack '"$INSTDIR\NyautomatorSpaceCalibrator.exe" -openvrpath'
 	Pop $0
 	Pop $vrRuntimePath
 	DetailPrint "VR runtime path: $vrRuntimePath"
@@ -124,27 +124,27 @@ Section "Install" SecInstall
 		RMdir "$vrRuntimePath\drivers\000spacecalibrator\"
 	nocleanupbeta:
 
-	SetOutPath "$vrRuntimePath\drivers\01spacecalibrator"
+	SetOutPath "$vrRuntimePath\drivers\nyautomator_spacecalibrator"
 	File "${DRIVER_RESDIR}\driver.vrdrivermanifest"
-	SetOutPath "$vrRuntimePath\drivers\01spacecalibrator\resources"
+	SetOutPath "$vrRuntimePath\drivers\nyautomator_spacecalibrator\resources"
 	File "${DRIVER_RESDIR}\resources\driver.vrresources"
-	SetOutPath "$vrRuntimePath\drivers\01spacecalibrator\resources\settings"
+	SetOutPath "$vrRuntimePath\drivers\nyautomator_spacecalibrator\resources\settings"
 	File "${DRIVER_RESDIR}\resources\settings\default.vrsettings"
-	SetOutPath "$vrRuntimePath\drivers\01spacecalibrator\bin\win64"
-	File "..\x64\Release\driver_01spacecalibrator.dll"
+	SetOutPath "$vrRuntimePath\drivers\nyautomator_spacecalibrator\bin\win64"
+	File "..\x64\Release\driver_nyautomator_spacecalibrator.dll"
 	
-	WriteRegStr HKLM "Software\OpenVR-SpaceCalibrator\Main" "" $INSTDIR
-	WriteRegStr HKLM "Software\OpenVR-SpaceCalibrator\Driver" "" $vrRuntimePath
+	WriteRegStr HKLM "Software\NyautomatorSpaceCalibrator\Main" "" $INSTDIR
+	WriteRegStr HKLM "Software\NyautomatorSpaceCalibrator\Driver" "" $vrRuntimePath
   
 	WriteUninstaller "$INSTDIR\Uninstall.exe"
-	WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\OpenVRSpaceCalibrator" "DisplayName" "OpenVR-SpaceCalibrator"
-	WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\OpenVRSpaceCalibrator" "UninstallString" "$\"$INSTDIR\Uninstall.exe$\""
+	WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\NyautomatorSpaceCalibrator" "DisplayName" "Nyautomator Space Calibrator"
+	WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\NyautomatorSpaceCalibrator" "UninstallString" "$\"$INSTDIR\Uninstall.exe$\""
 
-	CreateShortCut "$SMPROGRAMS\OpenVR-SpaceCalibrator.lnk" "$INSTDIR\OpenVR-SpaceCalibrator.exe"
+	CreateShortCut "$SMPROGRAMS\NyautomatorSpaceCalibrator.lnk" "$INSTDIR\NyautomatorSpaceCalibrator.exe"
 	
 	SetOutPath "$INSTDIR"
-	nsExec::ExecToLog '"$INSTDIR\OpenVR-SpaceCalibrator.exe" -installmanifest'
-	nsExec::ExecToLog '"$INSTDIR\OpenVR-SpaceCalibrator.exe" -activatemultipledrivers'
+	nsExec::ExecToLog '"$INSTDIR\NyautomatorSpaceCalibrator.exe" -installmanifest'
+	nsExec::ExecToLog '"$INSTDIR\NyautomatorSpaceCalibrator.exe" -activatemultipledrivers'
 
 SectionEnd
 
@@ -160,33 +160,33 @@ Section "Uninstall"
 		Abort
 	
 	SetOutPath "$INSTDIR"
-	nsExec::ExecToLog '"$INSTDIR\OpenVR-SpaceCalibrator.exe" -removemanifest'
+	nsExec::ExecToLog '"$INSTDIR\NyautomatorSpaceCalibrator.exe" -removemanifest'
 
 	Var /GLOBAL vrRuntimePath2
-	ReadRegStr $vrRuntimePath2 HKLM "Software\OpenVR-SpaceCalibrator\Driver" ""
+	ReadRegStr $vrRuntimePath2 HKLM "Software\NyautomatorSpaceCalibrator\Driver" ""
 	DetailPrint "VR runtime path: $vrRuntimePath2"
-	Delete "$vrRuntimePath2\drivers\01spacecalibrator\driver.vrdrivermanifest"
-	Delete "$vrRuntimePath2\drivers\01spacecalibrator\resources\driver.vrresources"
-	Delete "$vrRuntimePath2\drivers\01spacecalibrator\resources\settings\default.vrsettings"
-	Delete "$vrRuntimePath2\drivers\01spacecalibrator\bin\win64\driver_01spacecalibrator.dll"
-	Delete "$vrRuntimePath2\drivers\01spacecalibrator\bin\win64\space_calibrator_driver.log"
-	RMdir "$vrRuntimePath2\drivers\01spacecalibrator\resources\settings"
-	RMdir "$vrRuntimePath2\drivers\01spacecalibrator\resources\"
-	RMdir "$vrRuntimePath2\drivers\01spacecalibrator\bin\win64\"
-	RMdir "$vrRuntimePath2\drivers\01spacecalibrator\bin\"
-	RMdir "$vrRuntimePath2\drivers\01spacecalibrator\"
+	Delete "$vrRuntimePath2\drivers\nyautomator_spacecalibrator\driver.vrdrivermanifest"
+	Delete "$vrRuntimePath2\drivers\nyautomator_spacecalibrator\resources\driver.vrresources"
+	Delete "$vrRuntimePath2\drivers\nyautomator_spacecalibrator\resources\settings\default.vrsettings"
+	Delete "$vrRuntimePath2\drivers\nyautomator_spacecalibrator\bin\win64\driver_nyautomator_spacecalibrator.dll"
+	Delete "$vrRuntimePath2\drivers\nyautomator_spacecalibrator\bin\win64\space_calibrator_driver.log"
+	RMdir "$vrRuntimePath2\drivers\nyautomator_spacecalibrator\resources\settings"
+	RMdir "$vrRuntimePath2\drivers\nyautomator_spacecalibrator\resources\"
+	RMdir "$vrRuntimePath2\drivers\nyautomator_spacecalibrator\bin\win64\"
+	RMdir "$vrRuntimePath2\drivers\nyautomator_spacecalibrator\bin\"
+	RMdir "$vrRuntimePath2\drivers\nyautomator_spacecalibrator\"
 
 	Delete "$INSTDIR\LICENSE"
-	Delete "$INSTDIR\OpenVR-SpaceCalibrator.exe"
+	Delete "$INSTDIR\NyautomatorSpaceCalibrator.exe"
 	Delete "$INSTDIR\openvr_api.dll"
 	Delete "$INSTDIR\manifest.vrmanifest"
 	Delete "$INSTDIR\icon.png"
 	
-	DeleteRegKey HKLM "Software\OpenVR-SpaceCalibrator\Main"
-	DeleteRegKey HKLM "Software\OpenVR-SpaceCalibrator\Driver"
-	DeleteRegKey HKLM "Software\OpenVR-SpaceCalibrator"
-	DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\OpenVRSpaceCalibrator"
+	DeleteRegKey HKLM "Software\NyautomatorSpaceCalibrator\Main"
+	DeleteRegKey HKLM "Software\NyautomatorSpaceCalibrator\Driver"
+	DeleteRegKey HKLM "Software\NyautomatorSpaceCalibrator"
+	DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\NyautomatorSpaceCalibrator"
 
-	Delete "$SMPROGRAMS\OpenVR-SpaceCalibrator.lnk"
+	Delete "$SMPROGRAMS\NyautomatorSpaceCalibrator.lnk"
 SectionEnd
 
